@@ -86,7 +86,6 @@
   .note-card li{font-size:12.5px;color:var(--mist);line-height:1.5;padding-left:14px;position:relative;opacity:.85;}
   .note-card li::before{content:'—';position:absolute;left:0;color:var(--stone);opacity:.5;}
   /* log workout button */
-  .log-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:40px;}
   .log-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:10px 22px;background:rgba(168,196,204,.12);border:1px solid rgba(168,196,204,.35);color:var(--ice);border-radius:3px;cursor:pointer;transition:background .15s,border-color .15s;}
   .log-btn:hover{background:rgba(168,196,204,.2);border-color:rgba(168,196,204,.6);}
   .log-btn-day{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;background:transparent;border:1px solid rgba(184,92,56,.35);color:var(--rust);border-radius:3px;cursor:pointer;transition:background .15s;}
@@ -117,11 +116,9 @@
   .export-btn{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;padding:8px 16px;border-radius:3px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
   .export-btn-csv{background:rgba(168,196,204,.1);border:1px solid rgba(168,196,204,.3);color:var(--ice);}
   .export-btn-csv:hover{background:rgba(168,196,204,.2);border-color:rgba(168,196,204,.55);}
-  .export-btn-sheets{background:rgba(66,133,244,.1);border:1px solid rgba(66,133,244,.35);color:#7ab3f7;}
-  .export-btn-sheets:hover{background:rgba(66,133,244,.2);border-color:rgba(66,133,244,.6);}
   .export-btn-setup{background:transparent;border:1px solid rgba(200,191,176,.15);color:var(--stone);font-size:9px;}
   .export-btn-setup:hover{border-color:rgba(200,191,176,.35);color:var(--snow);}
-  /* sheets modal */
+  /* modals */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;}
   .modal-overlay.open{display:flex;}
   .modal{background:#1e2c30;border:1px solid rgba(168,196,204,.2);border-radius:6px;padding:28px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;position:relative;}
@@ -135,11 +132,6 @@
   .modal-step p{font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:8px;}
   .modal-step p strong{color:var(--snow);font-weight:500;}
   .modal-step p a{color:var(--ice);opacity:.8;}
-  .code-block{background:rgba(0,0,0,.45);border:1px solid rgba(200,191,176,.1);border-radius:3px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:10.5px;color:var(--ice);line-height:1.65;white-space:pre-wrap;word-break:break-all;margin:8px 0;}
-  .code-actions{display:flex;justify-content:flex-end;margin-top:4px;}
-  .copy-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;background:rgba(168,196,204,.08);border:1px solid rgba(168,196,204,.2);color:var(--ice);border-radius:2px;cursor:pointer;transition:all .15s;}
-  .copy-btn:hover{background:rgba(168,196,204,.18);}
-  .url-input-wrap{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
   .url-input{flex:1;min-width:180px;background:rgba(255,255,255,.07);border:1px solid rgba(200,191,176,.2);border-radius:3px;color:var(--snow);font-family:'DM Mono',monospace;font-size:11px;padding:7px 10px;outline:none;}
   .url-input:focus{border-color:rgba(168,196,204,.5);}
   .url-save-btn{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;background:rgba(66,133,244,.15);border:1px solid rgba(66,133,244,.4);color:#7ab3f7;border-radius:3px;cursor:pointer;white-space:nowrap;}
