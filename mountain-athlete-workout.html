@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mountain Athlete Workout Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  :root {
+    --snow:#f0ede8;--stone:#c8bfb0;--slate:#3d4a52;--pine:#2a3d30;
+    --ice:#a8c4cc;--rust:#b85c38;--bark:#6b5c4a;--mist:#e8ecea;--dark:#1a2226;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--dark);color:var(--snow);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(ellipse at 20% 0%,rgba(42,61,48,.6) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(61,74,82,.5) 0%,transparent 55%);pointer-events:none;z-index:0;}
+  .container{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:48px 24px 80px;}
+  /* header */
+  header{margin-bottom:48px;}
+  .eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ice);margin-bottom:12px;opacity:.8;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,10vw,88px);line-height:.95;letter-spacing:.02em;color:var(--snow);}
+  h1 span{color:var(--ice);display:block;}
+  .header-meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(168,196,204,.3);color:var(--ice);border-radius:2px;}
+  /* philosophy */
+  .philosophy{background:rgba(42,61,48,.35);border-left:3px solid var(--ice);padding:20px 24px;margin-bottom:40px;border-radius:0 4px 4px 0;}
+  .philosophy p{font-size:14px;line-height:1.7;color:var(--mist);opacity:.9;}
+  .philosophy strong{color:var(--snow);font-weight:500;}
+  /* schedule */
+  .schedule-block{background:rgba(42,61,48,.25);border-radius:4px;padding:20px;margin-bottom:40px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;}
+  .sched-item{display:flex;flex-direction:column;gap:4px;}
+  .sched-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);}
+  .sched-value{font-size:14px;color:var(--snow);font-weight:500;}
+  .sched-divider{width:1px;height:32px;background:rgba(200,191,176,.2);}
+  /* section label */
+  .section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--stone);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:rgba(200,191,176,.2);}
+  /* day */
+  .day-block{margin-bottom:40px;}
+  .day-header{display:flex;align-items:baseline;gap:16px;margin-bottom:4px;}
+  .day-number{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:rgba(168,196,204,.15);letter-spacing:.02em;min-width:52px;}
+  .day-title-group{flex:1;}
+  .day-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.06em;color:var(--snow);line-height:1;}
+  .day-subtitle{font-size:12px;color:var(--ice);font-family:'DM Mono',monospace;letter-spacing:.1em;opacity:.7;margin-top:4px;}
+  .day-content{margin-left:68px;}
+  /* exercise section */
+  .exercise-section{margin-bottom:24px;}
+  .ex-section-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(184,92,56,.25);}
+  .exercise-list{display:flex;flex-direction:column;gap:3px;}
+  /* exercise row */
+  .exercise-row{background:rgba(255,255,255,.03);border-radius:3px;transition:background .15s;}
+  .exercise-row:hover{background:rgba(255,255,255,.055);}
+  .ex-main{display:grid;grid-template-columns:1fr 100px 120px 1fr;gap:10px;padding:9px 12px;align-items:center;}
+  .ex-name-wrap{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .ex-name{font-size:13.5px;font-weight:500;color:var(--snow);line-height:1.3;}
+  .ex-link{display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:var(--ice);opacity:.5;text-decoration:none;border:1px solid rgba(168,196,204,.2);padding:2px 6px;border-radius:2px;transition:opacity .15s,border-color .15s;white-space:nowrap;}
+  .ex-link:hover{opacity:1;border-color:rgba(168,196,204,.5);}
+  .ex-sets{font-family:'DM Mono',monospace;font-size:12px;color:var(--ice);text-align:center;background:rgba(168,196,204,.08);padding:3px 8px;border-radius:2px;white-space:nowrap;}
+  .ex-weight{display:flex;align-items:center;gap:5px;}
+  .weight-input{width:64px;background:rgba(255,255,255,.07);border:1px solid rgba(200,191,176,.2);border-radius:3px;color:var(--snow);font-family:'DM Mono',monospace;font-size:12px;padding:4px 7px;text-align:center;outline:none;transition:border-color .15s,background .15s;}
+  .weight-input::placeholder{color:rgba(200,191,176,.3);}
+  .weight-input:focus{border-color:rgba(168,196,204,.55);background:rgba(255,255,255,.1);}
+  .weight-unit{font-family:'DM Mono',monospace;font-size:10px;color:var(--stone);opacity:.6;letter-spacing:.05em;}
+  .no-weight{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--stone);opacity:.4;text-transform:uppercase;}
+  .ex-note{font-size:12px;color:var(--stone);line-height:1.4;font-style:italic;align-self:center;}
+  /* form cue toggle */
+  .form-cue-toggle{display:flex;align-items:center;gap:5px;margin:0 12px 0;padding:0 0 2px 0;cursor:pointer;background:none;border:none;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);opacity:.5;transition:opacity .15s;}
+  .form-cue-toggle:hover{opacity:.9;}
+  .form-cue-toggle svg{transition:transform .2s;}
+  .form-cue-toggle.open svg{transform:rotate(180deg);}
+  .form-cue-panel{display:none;padding:10px 14px 12px 14px;border-top:1px solid rgba(200,191,176,.07);}
+  .form-cue-panel.open{display:block;}
+  .form-cues{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;}
+  .form-cue-item{display:flex;align-items:baseline;gap:7px;font-size:12px;line-height:1.5;color:var(--mist);opacity:.8;}
+  .form-cue-item::before{content:'→';color:var(--ice);opacity:.5;font-size:11px;flex-shrink:0;}
+  /* finisher */
+  .finisher{background:rgba(184,92,56,.12);border:1px solid rgba(184,92,56,.25);border-radius:4px;padding:14px 16px;margin-top:20px;}
+  .finisher-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:8px;}
+  .finisher p{font-size:13px;color:var(--mist);line-height:1.6;}
+  .finisher strong{color:var(--snow);font-weight:500;}
+  .day-divider{height:1px;background:linear-gradient(to right,rgba(200,191,176,.1),transparent);margin:40px 0;}
+  /* notes grid */
+  .notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;}
+  .note-card{background:rgba(255,255,255,.04);border-radius:4px;padding:16px;}
+  .note-card-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ice);margin-bottom:10px;}
+  .note-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .note-card li{font-size:12.5px;color:var(--mist);line-height:1.5;padding-left:14px;position:relative;opacity:.85;}
+  .note-card li::before{content:'—';position:absolute;left:0;color:var(--stone);opacity:.5;}
+  /* log workout button */
+  .log-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:40px;}
+  .log-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:10px 22px;background:rgba(168,196,204,.12);border:1px solid rgba(168,196,204,.35);color:var(--ice);border-radius:3px;cursor:pointer;transition:background .15s,border-color .15s;}
+  .log-btn:hover{background:rgba(168,196,204,.2);border-color:rgba(168,196,204,.6);}
+  .log-btn-day{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;background:transparent;border:1px solid rgba(184,92,56,.35);color:var(--rust);border-radius:3px;cursor:pointer;transition:background .15s;}
+  .log-btn-day:hover{background:rgba(184,92,56,.12);}
+  /* history panel */
+  .history-section{margin-top:48px;}
+  .history-tabs{display:flex;gap:4px;margin-bottom:20px;}
+  .htab{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:7px 14px;background:transparent;border:1px solid rgba(200,191,176,.15);color:var(--stone);border-radius:3px;cursor:pointer;transition:all .15s;}
+  .htab.active{background:rgba(168,196,204,.1);border-color:rgba(168,196,204,.4);color:var(--ice);}
+  .history-tab-content{display:none;}
+  .history-tab-content.active{display:block;}
+  /* log entries */
+  .log-entry{background:rgba(255,255,255,.03);border-radius:3px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .log-entry-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--ice);opacity:.7;}
+  .log-entry-day{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);margin-bottom:3px;}
+  .log-entry-weights{font-size:12px;color:var(--mist);line-height:1.6;}
+  .log-delete{background:none;border:none;color:var(--stone);opacity:.35;cursor:pointer;font-size:16px;padding:0 4px;transition:opacity .15s;}
+  .log-delete:hover{opacity:.8;}
+  .empty-state{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--stone);opacity:.4;text-align:center;padding:32px 0;text-transform:uppercase;}
+  /* mini chart */
+  .trend-select-wrap{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+  .trend-select{background:rgba(255,255,255,.07);border:1px solid rgba(200,191,176,.2);color:var(--snow);font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;border-radius:3px;outline:none;cursor:pointer;}
+  .trend-select option{background:var(--dark);}
+  .chart-wrap{background:rgba(255,255,255,.03);border-radius:4px;padding:16px;position:relative;overflow:hidden;}
+  .chart-wrap canvas{display:block;width:100%!important;}
+  /* export bar */
+  .export-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .export-btn{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;padding:8px 16px;border-radius:3px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+  .export-btn-csv{background:rgba(168,196,204,.1);border:1px solid rgba(168,196,204,.3);color:var(--ice);}
+  .export-btn-csv:hover{background:rgba(168,196,204,.2);border-color:rgba(168,196,204,.55);}
+  .export-btn-sheets{background:rgba(66,133,244,.1);border:1px solid rgba(66,133,244,.35);color:#7ab3f7;}
+  .export-btn-sheets:hover{background:rgba(66,133,244,.2);border-color:rgba(66,133,244,.6);}
+  .export-btn-setup{background:transparent;border:1px solid rgba(200,191,176,.15);color:var(--stone);font-size:9px;}
+  .export-btn-setup:hover{border-color:rgba(200,191,176,.35);color:var(--snow);}
+  /* sheets modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:#1e2c30;border:1px solid rgba(168,196,204,.2);border-radius:6px;padding:28px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;position:relative;}
+  .modal h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.05em;color:var(--snow);margin-bottom:4px;}
+  .modal-subtitle{font-size:12px;color:var(--stone);margin-bottom:20px;font-style:italic;}
+  .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--stone);font-size:22px;cursor:pointer;opacity:.6;transition:opacity .15s;line-height:1;}
+  .modal-close:hover{opacity:1;}
+  .modal-step{margin-top:22px;padding-top:18px;border-top:1px solid rgba(200,191,176,.08);}
+  .modal-step:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .modal-step-num{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:7px;}
+  .modal-step p{font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:8px;}
+  .modal-step p strong{color:var(--snow);font-weight:500;}
+  .modal-step p a{color:var(--ice);opacity:.8;}
+  .code-block{background:rgba(0,0,0,.45);border:1px solid rgba(200,191,176,.1);border-radius:3px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:10.5px;color:var(--ice);line-height:1.65;white-space:pre-wrap;word-break:break-all;margin:8px 0;}
+  .code-actions{display:flex;justify-content:flex-end;margin-top:4px;}
+  .copy-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;background:rgba(168,196,204,.08);border:1px solid rgba(168,196,204,.2);color:var(--ice);border-radius:2px;cursor:pointer;transition:all .15s;}
+  .copy-btn:hover{background:rgba(168,196,204,.18);}
+  .url-input-wrap{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .url-input{flex:1;min-width:180px;background:rgba(255,255,255,.07);border:1px solid rgba(200,191,176,.2);border-radius:3px;color:var(--snow);font-family:'DM Mono',monospace;font-size:11px;padding:7px 10px;outline:none;}
+  .url-input:focus{border-color:rgba(168,196,204,.5);}
+  .url-save-btn{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;background:rgba(66,133,244,.15);border:1px solid rgba(66,133,244,.4);color:#7ab3f7;border-radius:3px;cursor:pointer;white-space:nowrap;}
+  .url-save-btn:hover{background:rgba(66,133,244,.25);}
+  .sync-status{font-family:'DM Mono',monospace;font-size:11px;margin-top:10px;min-height:18px;letter-spacing:.05em;}
+  .sync-ok{color:#7ab3f7;} .sync-err{color:var(--rust);}
+  /* toast */
+  .save-toast{position:fixed;bottom:24px;right:24px;background:rgba(42,61,48,.95);border:1px solid rgba(168,196,204,.3);color:var(--ice);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;padding:10px 16px;border-radius:4px;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;z-index:100;}
+  .save-toast.show{opacity:1;transform:translateY(0);}
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid rgba(200,191,176,.1);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--stone);opacity:.5;text-transform:uppercase;}
+  @media(max-width:620px){
+    .ex-main{grid-template-columns:1fr 88px 100px;}
+    .ex-note{grid-column:1/-1;padding-top:2px;}
+    .day-content{margin-left:0;}
+    .day-number{font-size:40px;min-width:40px;}
+    .notes-grid{grid-template-columns:1fr;}
+    .form-cues{grid-template-columns:1fr;}
+  }
+  /* Supabase status badge */
+  .sb-badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px;display:inline-block;}
+  .sb-badge.connected{color:#7ab3f7;border:1px solid rgba(66,133,244,.35);background:rgba(66,133,244,.08);}
+  .sb-badge:not(.connected){color:var(--stone);border:1px solid rgba(200,191,176,.15);}
+  /* Log modal — exercise blocks */
+  .ex-log-block{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(200,191,176,.07);}
+  .ex-log-block:last-child{border-bottom:none;margin-bottom:0;}
+  .ex-log-name{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
+  /* Set rows */
+  .set-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+  .set-num{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--stone);width:36px;flex-shrink:0;opacity:.6;letter-spacing:.05em;}
+  .set-w{width:60px!important;text-align:center;}
+  .set-r{width:50px!important;text-align:center;}
+  .set-rpe{width:42px!important;text-align:center;}
+  .set-sep{font-family:'DM Mono',monospace;font-size:11px;color:var(--stone);opacity:.4;}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="save-toast" id="toast"></div>
+<div class="container">
+
+<header>
+  <div class="eyebrow">Gym Training Plan · Mid-30s Male</div>
+  <h1>Mountain<span>Athlete</span></h1>
+  <div class="header-meta">
+    <span class="tag">Backcountry Ski</span><span class="tag">Mountain Bike</span>
+    <span class="tag">Hiking / Trail</span><span class="tag">Backpacking</span>
+    <span class="tag">Power Yoga ×1/wk</span><span class="tag">1–2× Gym / Week</span>
+  </div>
+</header>
+
+<div class="philosophy">
+  <p><strong>Design logic:</strong> Your yoga covers flexibility, balance, and body awareness. Your sports demand explosive leg power, single-leg stability, posterior chain strength, rotational core, and the pulling/carrying capacity for loaded packs. Desk work means you likely have tight hips and weak posterior chain from sitting — that's the corrective thread woven through both sessions. Each day stands alone for one-session weeks, but they complement each other when you get both in.</p>
+</div>
+
+<div class="schedule-block">
+  <div class="sched-item"><span class="sched-label">Session Length</span><span class="sched-value">50–65 min</span></div>
+  <div class="sched-divider"></div>
+  <div class="sched-item"><span class="sched-label">Frequency</span><span class="sched-value">1–2× per week</span></div>
+  <div class="sched-divider"></div>
+  <div class="sched-item"><span class="sched-label">Priority Day</span><span class="sched-value">Day A (Legs/Power)</span></div>
+  <div class="sched-divider"></div>
+  <div class="sched-item"><span class="sched-label">Structure</span><span class="sched-value">Full-body, sport-specific</span></div>
+</div>
+
+<div class="section-label">The Sessions</div>
+
+<!-- hidden SVG icons -->
+<svg style="display:none">
+  <symbol id="icon-search" viewBox="0 0 12 12"><circle cx="5" cy="5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><line x1="7.5" y1="7.5" x2="10.5" y2="10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="icon-chevron" viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- ======== DAY A ======== -->
+<div class="day-block">
+  <div class="day-header">
+    <div class="day-number">A</div>
+    <div class="day-title-group">
+      <div class="day-title">Legs, Power &amp; Core</div>
+      <div class="day-subtitle">Priority session · Do this when you only get one day</div>
+    </div>
+  </div>
+  <div class="day-content">
+
+    <div class="exercise-section">
+      <div class="ex-section-title">Warm-Up · ~8 min</div>
+      <div class="exercise-list">
+
+        <!-- Hip 90/90 -->
+        <div class="exercise-row" data-id="hip9090">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Hip 90/90 Stretch + Transitions</span><a class="ex-link" href="https://www.google.com/search?q=hip+90+90+stretch+transitions+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">2 min</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Corrects hip tightness from sitting; directly carries into ski hip mobility</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Sit on the floor, both legs bent at 90° — front shin parallel to you, back shin out to the side</div>
+            <div class="form-cue-item">Keep your spine tall; don't round forward to chase the stretch</div>
+            <div class="form-cue-item">Transition by lifting both knees simultaneously and switching sides — don't use your hands to push off</div>
+            <div class="form-cue-item">Lean forward over the front shin to increase depth — stop when hips start to rotate</div>
+          </div></div>
+        </div>
+
+        <!-- Glute Bridge -->
+        <div class="exercise-row" data-id="glutebridge">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Glute Bridge + Leg Curl</span><a class="ex-link" href="https://www.google.com/search?q=glute+bridge+hamstring+curl+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">2×10</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Activates posterior chain before loading; hamstring work critical for ski safety</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Feet flat on floor, hip-width apart, knees at ~90°</div>
+            <div class="form-cue-item">Drive through heels — not toes — to lift your hips. Squeeze glutes at the top</div>
+            <div class="form-cue-item">Don't hyperextend your lower back at the top; ribs stay down</div>
+            <div class="form-cue-item">For the curl variation, use a stability ball or slider under your feet and curl heels toward glutes at the top of the bridge</div>
+          </div></div>
+        </div>
+
+        <!-- Band Walks -->
+        <div class="exercise-row" data-id="bandwalks">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Lateral Band Walks</span><a class="ex-link" href="https://www.google.com/search?q=lateral+band+walks+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">2×15 ea</div>
+            <div class="ex-weight"><span class="no-weight">band</span></div>
+            <div class="ex-note">Hip abductor activation; keeps knees tracking on hard ski turns</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Band around ankles or just above knees — ankles is harder</div>
+            <div class="form-cue-item">Slight squat stance (quarter squat), chest up, tension in band at all times</div>
+            <div class="form-cue-item">Step out wide enough to keep band taut; don't let feet come fully together</div>
+            <div class="form-cue-item">Move from the hip, not the knee — don't let knees cave inward as you step</div>
+          </div></div>
+        </div>
+
+        <!-- World's Greatest -->
+        <div class="exercise-row" data-id="wgs">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">World's Greatest Stretch</span><a class="ex-link" href="https://www.google.com/search?q=world%27s+greatest+stretch+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">4 ea side</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Total mobility primer — thoracic, hip flexor, hamstring in one movement</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Start in a lunge: step forward, back knee down. Plant same-side hand on the floor inside your front foot</div>
+            <div class="form-cue-item">Rotate the opposite arm up toward the ceiling, following your hand with your eyes</div>
+            <div class="form-cue-item">Drive your front knee out slightly to open the hip — don't let it cave in</div>
+            <div class="form-cue-item">Move slowly and breathe through each rep; this is mobility, not a race</div>
+          </div></div>
+        </div>
+
+      </div>
+    </div><!-- end warm-up -->
+
+    <div class="exercise-section">
+      <div class="ex-section-title">Main Work · ~35 min</div>
+      <div class="exercise-list">
+
+        <!-- Back Squat -->
+        <div class="exercise-row" data-id="squat">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Barbell Back Squat <em>or</em> Goblet Squat</span></div>
+            <div class="ex-sets">4×5–6</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-a1" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Primary ski strength movement. Go heavy. Goblet if lower back is fatigued</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Bar sits on upper traps (high bar) or rear delts (low bar). Squeeze the bar hard — creates upper back tension</div>
+            <div class="form-cue-item">Feet shoulder-width, toes slightly out (10–30°). Find YOUR stance — not everyone is the same</div>
+            <div class="form-cue-item">Brace your core like you're about to take a punch before you unrack. Maintain that brace the whole rep</div>
+            <div class="form-cue-item">Break at hips and knees simultaneously. Knees track over toes — push them out</div>
+            <div class="form-cue-item">Hit at least parallel (hip crease below knee). Drive floor away on the way up — don't think "up," think "push"</div>
+            <div class="form-cue-item">Goblet version: hold dumbbell or kettlebell at chest, elbows inside knees at the bottom</div>
+          </div></div>
+        </div>
+
+        <!-- RDL -->
+        <div class="exercise-row" data-id="rdl">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Romanian Deadlift (RDL)</span><a class="ex-link" href="https://www.google.com/search?q=romanian+deadlift+how+to+form" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×8</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-a2" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Posterior chain — glutes, hamstrings, lower back. Protects knees on descent</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Stand with bar or dumbbells against your thighs. Shoulders back and down, slight bend in knees — lock that knee angle</div>
+            <div class="form-cue-item">Hinge at the hips by pushing them BACK, not bending at the waist. Think: "close a car door with your hips"</div>
+            <div class="form-cue-item">Bar/dumbbells drag down your legs the whole time — never leave your body</div>
+            <div class="form-cue-item">Lower until you feel a hard pull in your hamstrings (typically shins level or just below). Don't go past your mobility</div>
+            <div class="form-cue-item">Drive hips forward to stand — squeeze glutes hard at the top</div>
+          </div></div>
+        </div>
+
+        <!-- Bulgarian Split Squat -->
+        <div class="exercise-row" data-id="bss">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Bulgarian Split Squat</span><a class="ex-link" href="https://www.google.com/search?q=bulgarian+split+squat+how+to+form" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×8 ea</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-a3" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Single-leg power = real ski terrain. Reveals and corrects side-to-side imbalances</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Rear foot elevated on a bench (laces down) or a box. Front foot far enough forward that your front shin stays vertical</div>
+            <div class="form-cue-item">Lower straight down — don't let your torso pitch excessively forward</div>
+            <div class="form-cue-item">Front knee tracks over your toes. Don't let it cave inward — this is a ski-specific cue</div>
+            <div class="form-cue-item">Back knee descends toward — but doesn't slam — the floor</div>
+            <div class="form-cue-item">Drive through your front heel to stand. Weaker side first, every set</div>
+          </div></div>
+        </div>
+
+        <!-- Step Up -->
+        <div class="exercise-row" data-id="stepup">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Step-Up with Knee Drive (weighted)</span><a class="ex-link" href="https://www.google.com/search?q=weighted+step+up+knee+drive+exercise" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×10 ea</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-a4" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Mimics uphill hiking step pattern. Use a 16–20" box, hold dumbbells</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Full foot on the box — don't just use your toes. Step high enough to challenge you (knee at or above hip when foot is placed)</div>
+            <div class="form-cue-item">Press through the heel of the working leg to stand. Don't push off the trailing leg on the ground</div>
+            <div class="form-cue-item">Drive the free knee up toward your chest at the top — this is the "knee drive" that mimics hiking stride</div>
+            <div class="form-cue-item">Step back down with control — the descent is where real single-leg strength is built</div>
+          </div></div>
+        </div>
+
+        <!-- Pallof Press -->
+        <div class="exercise-row" data-id="pallof">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Pallof Press</span><a class="ex-link" href="https://www.google.com/search?q=pallof+press+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×12 ea</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-a5" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Anti-rotation core — protects spine during shoveling, ski turns, and bike hits</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Set cable at chest height. Stand sideways to the machine, feet shoulder-width, slight squat</div>
+            <div class="form-cue-item">Hold the handle at your sternum. Brace hard — then press straight out in front of you</div>
+            <div class="form-cue-item">The challenge is resisting rotation toward the cable. Your hips and shoulders stay square throughout</div>
+            <div class="form-cue-item">Hold extended 1–2 sec, return slowly. Don't let the cable yank you back</div>
+            <div class="form-cue-item">If you're rotating at all, the weight is too heavy</div>
+          </div></div>
+        </div>
+
+        <!-- Dead Bug -->
+        <div class="exercise-row" data-id="deadbug">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Dead Bug</span><a class="ex-link" href="https://www.google.com/search?q=dead+bug+exercise+how+to+core" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×8 ea</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Deep core stability — counters anterior pelvic tilt from desk sitting</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Lie on your back. Press your lower back FLAT into the floor — maintain this the entire set. This is the whole point</div>
+            <div class="form-cue-item">Arms straight up, knees at 90° above hips (tabletop). Exhale fully before each rep</div>
+            <div class="form-cue-item">Extend opposite arm and leg simultaneously — move slowly and with control</div>
+            <div class="form-cue-item">The moment your lower back lifts off the floor, that's your range of motion limit for now. Don't go further</div>
+            <div class="form-cue-item">Return under control — don't let limbs crash back to start</div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="finisher">
+      <div class="finisher-label">Optional Conditioning Finisher · 8–10 min</div>
+      <p><strong>Ski/Bike Intervals:</strong> 6 rounds — 30 sec bike erg or ski erg sprint at max effort / 30 sec rest. Or: 3 min step-ups on the stair machine at a challenging pace. Skip this in-season when you're getting plenty of sport-specific cardio.</p>
+    </div>
+
+    <div style="margin-top:20px;text-align:right;">
+      <button class="log-btn-day" onclick="logDay('A')">Log Day A Workout →</button>
+    </div>
+  </div>
+</div>
+
+<div class="day-divider"></div>
+
+<!-- ======== DAY B ======== -->
+<div class="day-block">
+  <div class="day-header">
+    <div class="day-number">B</div>
+    <div class="day-title-group">
+      <div class="day-title">Pull, Press &amp; Carry</div>
+      <div class="day-subtitle">Upper body, posture correction, loaded movement</div>
+    </div>
+  </div>
+  <div class="day-content">
+
+    <div class="exercise-section">
+      <div class="ex-section-title">Warm-Up · ~6 min</div>
+      <div class="exercise-list">
+
+        <div class="exercise-row" data-id="catcow">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Cat-Cow + Thoracic Rotation</span><a class="ex-link" href="https://www.google.com/search?q=cat+cow+thoracic+rotation+mobility+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">1 min</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Undoes forward hunch from desk work; frees thoracic spine for overhead movement</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">On hands and knees, wrists under shoulders, knees under hips</div>
+            <div class="form-cue-item">Cat: exhale, round your entire spine toward the ceiling like an angry cat. Tuck chin and tailbone</div>
+            <div class="form-cue-item">Cow: inhale, let belly drop, lift chest and tailbone. Don't just move your lower back — get your whole spine involved</div>
+            <div class="form-cue-item">For thoracic rotation: from the hands-and-knees position, place one hand behind your head and rotate that elbow toward the ceiling. Follow with your eyes</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="pullapart">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Band Pull-Aparts</span><a class="ex-link" href="https://www.google.com/search?q=band+pull+aparts+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×15</div>
+            <div class="ex-weight"><span class="no-weight">band</span></div>
+            <div class="ex-note">Activates rear delts and mid-traps — posture muscles dormant from sitting</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Hold band at shoulder height with arms straight in front of you, hands slightly wider than shoulders</div>
+            <div class="form-cue-item">Pull the band apart by driving elbows back — not by shrugging</div>
+            <div class="form-cue-item">Squeeze your shoulder blades together hard at full stretch. Hold briefly</div>
+            <div class="form-cue-item">Keep your shoulders down away from your ears the whole time</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="deadhang">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Dead Hang (bar)</span></div>
+            <div class="ex-sets">3×20 sec</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Decompresses spine, activates lat and grip, prepares shoulders</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Hang from a pull-up bar with an overhand grip, arms fully straight</div>
+            <div class="form-cue-item">Don't go completely passive — keep a very slight shoulder engagement (pack your shoulder blades down slightly)</div>
+            <div class="form-cue-item">Breathe and let your spine lengthen. Feel the traction through your lats and spine</div>
+            <div class="form-cue-item">Progress to single-arm hangs over time for grip and shoulder strength</div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="exercise-section">
+      <div class="ex-section-title">Main Work · ~38 min</div>
+      <div class="exercise-list">
+
+        <div class="exercise-row" data-id="pullup">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Weighted Pull-Up <em>or</em> Lat Pulldown</span></div>
+            <div class="ex-sets">4×5–6</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-b1" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Weighted pull-ups if you can do 8+ bodyweight. Critical for hauling a loaded pack</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Grip slightly wider than shoulder-width, overhand. Dead hang to start each rep</div>
+            <div class="form-cue-item">Initiate by pulling your shoulder blades DOWN and back before bending your elbows — this engages lats, not just biceps</div>
+            <div class="form-cue-item">Pull until chin clears bar. No kipping — full control up and down</div>
+            <div class="form-cue-item">Lower all the way down slowly (3 count). The eccentric is half the training benefit</div>
+            <div class="form-cue-item">For Lat Pulldown: same setup cues — initiate with shoulder blades, pull bar to upper chest</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="dbrow">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Single-Arm Dumbbell Row</span></div>
+            <div class="ex-sets">3×10 ea</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-b2" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Unilateral pulling with core engagement. Hits lats, rhomboids, and rear delt</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Brace one hand and knee on a bench. Back flat and parallel to the floor — don't twist</div>
+            <div class="form-cue-item">Let the dumbbell hang straight down from your shoulder at the start</div>
+            <div class="form-cue-item">Drive your elbow up and back toward your hip — not flared out wide</div>
+            <div class="form-cue-item">Squeeze at the top briefly. Don't rotate your torso to get more range — that's cheating</div>
+            <div class="form-cue-item">Go heavy here. Most people underload single-arm rows significantly</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="zpress">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Dumbbell Z-Press <em>or</em> Seated DB Press</span><a class="ex-link" href="https://www.google.com/search?q=dumbbell+z+press+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×8</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-b3" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Overhead pressing without back support — forces core bracing. Great for shoveling strength</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Z-Press: sit on the floor with legs straight in front of you. No back support, no cheating</div>
+            <div class="form-cue-item">Start with dumbbells at shoulder height, elbows at ~45°. Brace your core before each press</div>
+            <div class="form-cue-item">Press straight up — don't let your back arch to get the weight overhead. Ribs stay down</div>
+            <div class="form-cue-item">Tight hip flexors from sitting will make this hard at first — that's feedback, not a reason to avoid it</div>
+            <div class="form-cue-item">Seated DB press is a fine substitute if floor position is too uncomfortable</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="facepull">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Face Pulls (cable)</span><a class="ex-link" href="https://www.google.com/search?q=cable+face+pull+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×15</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-b4" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Rear delt and external rotator health — non-negotiable for desk workers</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Cable at or slightly above face height, rope attachment. Grip ends of rope with thumbs up</div>
+            <div class="form-cue-item">Pull the rope toward your face — aim for your nose — while flaring elbows out and slightly up</div>
+            <div class="form-cue-item">At full pull, hands should be beside your ears with elbows high. This is the external rotation</div>
+            <div class="form-cue-item">Go lighter than you think — this is a health movement, not an ego movement. Slow and controlled always</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="farmerscarry">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Farmer's Carry</span><a class="ex-link" href="https://www.google.com/search?q=farmer%27s+carry+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">4×40m</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-b5" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Heavy dumbbells or kettlebells. Grip, core, trap, and loaded gait all at once</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Pick up weights with a deadlift, stand tall. Shoulders back and down — don't let them creep up</div>
+            <div class="form-cue-item">Brace your core like you're wearing a weight belt. Breathe through your nose if possible</div>
+            <div class="form-cue-item">Walk with normal gait — short, controlled steps. Don't waddle or sway</div>
+            <div class="form-cue-item">Eyes forward, chin neutral. If your grip fails before your legs, the weight is right</div>
+            <div class="form-cue-item">Challenge: go heavier with shorter distance rather than lighter with longer distance</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="copenhagenplank">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Copenhagen Side Plank</span><a class="ex-link" href="https://www.google.com/search?q=copenhagen+side+plank+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×20s ea</div>
+            <div class="ex-weight"><span class="no-weight">bodyweight</span></div>
+            <div class="ex-note">Adductor and hip stability. Keeps you in the fall line instead of getting blown back</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Set up in a side plank. Top foot rests on a bench or box — not on the floor</div>
+            <div class="form-cue-item">Lift your hips up to form a straight line from head to toe. This is harder than it looks because of the adductor load</div>
+            <div class="form-cue-item">Regression: bottom knee down. Progression: both legs straight, top leg elevated high</div>
+            <div class="form-cue-item">Don't let your top hip sag or rotate forward. Hips stay stacked and square</div>
+          </div></div>
+        </div>
+
+        <div class="exercise-row" data-id="suitcase">
+          <div class="ex-main">
+            <div class="ex-name-wrap"><span class="ex-name">Suitcase Deadlift (single side)</span><a class="ex-link" href="https://www.google.com/search?q=suitcase+deadlift+exercise+how+to" target="_blank"><svg width="10" height="10"><use href="#icon-search"/></svg>example</a></div>
+            <div class="ex-sets">3×8 ea</div>
+            <div class="ex-weight"><input class="weight-input" type="number" id="w-b6" placeholder="—" min="0" step="5"><span class="weight-unit">lbs</span></div>
+            <div class="ex-note">Lateral core and hip stability under load. Translates to uneven trail terrain</div>
+          </div>
+          <button class="form-cue-toggle" onclick="toggleCue(this)"><svg width="11" height="11"><use href="#icon-chevron"/></svg>Form cues</button>
+          <div class="form-cue-panel"><div class="form-cues">
+            <div class="form-cue-item">Dumbbell or kettlebell beside one foot, not in front. Hinge down and grip it like a suitcase handle</div>
+            <div class="form-cue-item">The challenge: resist leaning toward the weight as you stand. Keep your spine totally vertical</div>
+            <div class="form-cue-item">Brace your obliques on the opposite side — they're what's keeping you upright</div>
+            <div class="form-cue-item">Stand fully, then hinge back down. Don't let the weight drift in front of you</div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="finisher">
+      <div class="finisher-label">Optional Finisher · 5 min</div>
+      <p><strong>Grip &amp; Carry Circuit:</strong> 2 rounds — Farmer's carry 40m + 10 pull-up hang switches + 60 sec rest. Or just add 5 minutes of Zone 2 rowing to build aerobic base for long ski days.</p>
+    </div>
+
+    <div style="margin-top:20px;text-align:right;">
+      <button class="log-btn-day" onclick="logDay('B')">Log Day B Workout →</button>
+    </div>
+  </div>
+</div>
+
+<div class="day-divider"></div>
+
+<!-- ======== NOTES ======== -->
+<div class="section-label">Programming Notes</div>
+<div class="notes-grid">
+  <div class="note-card"><div class="note-card-title">Loading &amp; Progression</div><ul>
+    <li>Add weight when you can complete all sets with 1–2 reps in reserve</li>
+    <li>Priority movements (squat, RDL, pull-up) — add 5–10 lbs when ready</li>
+    <li>Accessory work — add reps first, then weight</li>
+    <li>Don't chase soreness; you need legs for the mountain</li>
+  </ul></div>
+  <div class="note-card"><div class="note-card-title">Seasonal Adjustments</div><ul>
+    <li><strong>Ski season (Dec–Apr):</strong> Prioritize Day A, skip finishers, reduce volume if skiing 2+ days/week</li>
+    <li><strong>Off-season (May–Nov):</strong> Run both days, add conditioning finishers</li>
+    <li>Pre-season (Oct–Nov): Focus on single-leg strength and Bulgarian split squats</li>
+  </ul></div>
+  <div class="note-card"><div class="note-card-title">Desk Posture Priorities</div><ul>
+    <li>Never skip face pulls or band pull-aparts — these are corrective</li>
+    <li>Hip 90/90 and world's greatest stretch every session, no exceptions</li>
+    <li>Dead hangs decompress what sitting compresses</li>
+    <li>Your yoga helps; this doubles down on it</li>
+  </ul></div>
+  <div class="note-card"><div class="note-card-title">One-Day-Week Strategy</div><ul>
+    <li>Always do Day A if choosing one session</li>
+    <li>Legs and core are your sport-limiting factors, not pushing strength</li>
+    <li>Add one pull-up and one row set at the end of Day A if you have 10 extra min</li>
+    <li>Consistency over a few months beats perfection sporadically</li>
+  </ul></div>
+</div>
+
+<div class="day-divider"></div>
+
+<!-- ======== HISTORY ======== -->
+<div class="history-section">
+  <div class="section-label">Workout History &amp; Weight Trends</div>
+
+  <!-- Export bar -->
+  <div class="export-bar">
+    <div id="sb-status" style="display:flex;align-items:center;"></div>
+    <button class="export-btn export-btn-csv" onclick="exportCSV()">↓ Export CSV</button>
+    <button class="export-btn export-btn-setup" onclick="openSbSetup()">⚙ Supabase Setup</button>
+  </div>
+
+  <div class="history-tabs">
+    <button class="htab active" onclick="switchTab('log')">Session Log</button>
+    <button class="htab" onclick="switchTab('trend')">Weight Trends</button>
+  </div>
+
+  <!-- Log tab -->
+  <div class="history-tab-content active" id="tab-log">
+    <div id="log-list"></div>
+  </div>
+
+  <!-- Trend tab -->
+  <div class="history-tab-content" id="tab-trend">
+    <div class="trend-select-wrap">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--stone);opacity:.7;">Exercise</span>
+      <select class="trend-select" id="trend-ex-select" onchange="renderChart()"></select>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="trendChart" height="220"></canvas>
+      <div id="chart-empty" class="empty-state" style="display:none;">No data yet for this exercise.<br>Log a session first.</div>
+    </div>
+  </div>
+</div>
+
+<footer>Mountain Athlete · 1–2× Weekly Gym Plan · Built for backcountry, trail, and alpine terrain</footer>
+</div><!-- /container -->
+
+<!-- ======== WORKOUT LOG MODAL ======== -->
+<div class="modal-overlay" id="log-modal" onclick="closeLogModalOutside(event)">
+  <div class="modal" style="max-width:520px;">
+    <button class="modal-close" onclick="closeLogModal()">×</button>
+    <h3 id="log-modal-title">Log Day A</h3>
+    <p class="modal-subtitle" id="log-modal-date"></p>
+    <div id="log-modal-body"></div>
+    <div style="margin-top:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin-bottom:6px;">Session Notes (optional)</div>
+      <textarea id="log-modal-notes" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(200,191,176,.2);border-radius:3px;color:var(--snow);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;outline:none;resize:vertical;min-height:56px;" placeholder="How did it feel? Any notes on form or conditions…"></textarea>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px;">
+      <button class="log-btn-day" onclick="closeLogModal()">Cancel</button>
+      <button class="log-btn" onclick="submitLog()">Save Workout →</button>
+    </div>
+    <div id="log-modal-status" style="margin-top:10px;font-family:'DM Mono',monospace;font-size:11px;min-height:16px;letter-spacing:.05em;"></div>
+  </div>
+</div>
+
+<!-- ======== SUPABASE SETUP MODAL ======== -->
+<div class="modal-overlay" id="sb-modal" onclick="closeSbModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSbSetup()">×</button>
+    <h3>Supabase Setup</h3>
+    <p class="modal-subtitle">Connect to your Supabase project for cross-device workout history</p>
+    <div id="sb-conn-status" class="sync-status" style="margin-bottom:16px;"></div>
+
+    <div class="modal-step">
+      <div class="modal-step-num">Step 1 — Get your Supabase credentials</div>
+      <p>Go to your Supabase project → <strong>Settings → API</strong>. You need the <strong>Project URL</strong> and the <strong>anon / public key</strong>.</p>
+    </div>
+
+    <div class="modal-step">
+      <div class="modal-step-num">Step 2 — Create the tables</div>
+      <p>Open <strong>SQL Editor</strong> in Supabase and run the contents of <strong>supabase_schema.sql</strong> (generated alongside this file). Creates <code style="font-family:'DM Mono',monospace;font-size:11px;background:rgba(0,0,0,.3);padding:2px 6px;border-radius:2px;">workout_sessions</code> and <code style="font-family:'DM Mono',monospace;font-size:11px;background:rgba(0,0,0,.3);padding:2px 6px;border-radius:2px;">workout_sets</code> tables.</p>
+    </div>
+
+    <div class="modal-step">
+      <div class="modal-step-num">Step 3 — Enter your credentials</div>
+      <div style="margin-bottom:10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin-bottom:5px;">Project URL</div>
+        <input class="url-input" id="sb-url-input" type="url" placeholder="https://xxxx.supabase.co" style="width:100%;">
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin-bottom:5px;">Anon / Public Key</div>
+        <input class="url-input" id="sb-key-input" type="text" placeholder="eyJh…" style="width:100%;">
+      </div>
+      <div style="margin-top:10px;">
+        <button class="url-save-btn" onclick="saveSbConfig()">Save &amp; Test Connection</button>
+      </div>
+    </div>
+
+    <div class="modal-step">
+      <div class="modal-step-num">Note on the anon key</div>
+      <p>The anon key is safe to embed in a personal app — it's a public, limited-permission key. RLS is off per the schema since this is single-user. If you ever share this HTML file publicly, re-enable RLS in Supabase.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Config keys ───────────────────────────────────────────────────────────────
+const KEY_WEIGHTS = 'maw-weights-v2';
+const KEY_SB_URL  = 'maw-sb-url';
+const KEY_SB_KEY  = 'maw-sb-key';
+
+// ─── Exercise definitions ──────────────────────────────────────────────────────
+const EXERCISES = {
+  A: [
+    { id: 'w-a1', name: 'Back Squat / Goblet Squat', sets: 4, defaultReps: 5 },
+    { id: 'w-a2', name: 'Romanian Deadlift',          sets: 3, defaultReps: 8 },
+    { id: 'w-a3', name: 'Bulgarian Split Squat',      sets: 3, defaultReps: 8 },
+    { id: 'w-a4', name: 'Step-Up (weighted)',          sets: 3, defaultReps: 10 },
+    { id: 'w-a5', name: 'Pallof Press',               sets: 3, defaultReps: 12 },
+  ],
+  B: [
+    { id: 'w-b1', name: 'Pull-Up / Lat Pulldown',    sets: 4, defaultReps: 5 },
+    { id: 'w-b2', name: 'Single-Arm DB Row',          sets: 3, defaultReps: 10 },
+    { id: 'w-b3', name: 'Z-Press / Seated DB Press',  sets: 3, defaultReps: 8 },
+    { id: 'w-b4', name: 'Face Pulls',                 sets: 3, defaultReps: 15 },
+    { id: 'w-b5', name: "Farmer's Carry",             sets: 4, defaultReps: null },
+    { id: 'w-b6', name: 'Suitcase Deadlift',          sets: 3, defaultReps: 8 },
+  ],
+};
+const ALL_EXERCISES = [...EXERCISES.A, ...EXERCISES.B];
+
+// ─── Supabase client ───────────────────────────────────────────────────────────
+const { createClient } = supabase;
+let sb = null;
+
+function initSupabase() {
+  const url = localStorage.getItem(KEY_SB_URL);
+  const key = localStorage.getItem(KEY_SB_KEY);
+  if (url && key) { sb = createClient(url, key); return true; }
+  sb = null; return false;
+}
+
+// ─── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── Weight inputs (localStorage) ─────────────────────────────────────────────
+function getWeights() {
+  try { return JSON.parse(localStorage.getItem(KEY_WEIGHTS) || '{}'); } catch { return {}; }
+}
+function setWeights(d) { localStorage.setItem(KEY_WEIGHTS, JSON.stringify(d)); }
+
+function loadWeights() {
+  const saved = getWeights();
+  ALL_EXERCISES.forEach(ex => {
+    const el = document.getElementById(ex.id);
+    if (el && saved[ex.id] !== undefined) el.value = saved[ex.id];
+  });
+}
+
+function initInputListeners() {
+  ALL_EXERCISES.forEach(ex => {
+    const el = document.getElementById(ex.id);
+    if (!el) return;
+    el.addEventListener('change', () => {
+      const d = getWeights();
+      if (el.value !== '') d[ex.id] = Number(el.value);
+      else delete d[ex.id];
+      setWeights(d);
+      showToast('Weight saved ✓');
+    });
+  });
+}
+
+// ─── Form cue toggles ─────────────────────────────────────────────────────────
+function toggleCue(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+
+// ─── Workout log modal ─────────────────────────────────────────────────────────
+let currentLogDay = null;
+let sessionStartTime = null;
+
+function logDay(day) {
+  if (!sb) { openSbSetup(); showToast('Connect Supabase first'); return; }
+  currentLogDay = day;
+  sessionStartTime = new Date().toISOString();
+  const weights = getWeights();
+
+  document.getElementById('log-modal-title').textContent = 'Log Day ' + day;
+  document.getElementById('log-modal-date').textContent = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+  });
+  document.getElementById('log-modal-notes').value = '';
+  document.getElementById('log-modal-status').textContent = '';
+
+  document.getElementById('log-modal-body').innerHTML = EXERCISES[day].map(ex => {
+    const defaultWeight = weights[ex.id] || '';
+    const rows = Array.from({ length: ex.sets }, (_, i) => `
+      <div class="set-row">
+        <span class="set-num">Set ${i + 1}</span>
+        <input class="weight-input set-w" type="number" min="0" step="5" placeholder="—"
+          data-ex="${ex.id}" data-set="${i + 1}" data-field="weight" value="${defaultWeight}">
+        <span class="weight-unit">lbs</span>
+        <span class="set-sep">×</span>
+        <input class="weight-input set-r" type="number" min="0" step="1"
+          placeholder="${ex.defaultReps || '—'}"
+          data-ex="${ex.id}" data-set="${i + 1}" data-field="reps"
+          ${ex.defaultReps ? `value="${ex.defaultReps}"` : ''}>
+        <span class="weight-unit">${ex.id === 'w-b5' ? 'm' : 'reps'}</span>
+        <span class="set-sep" style="margin-left:4px;">RPE</span>
+        <input class="weight-input set-rpe" type="number" min="1" max="10" step="1"
+          placeholder="—" data-ex="${ex.id}" data-set="${i + 1}" data-field="rpe">
+      </div>`).join('');
+    return `<div class="ex-log-block"><div class="ex-log-name">${ex.name}</div>${rows}</div>`;
+  }).join('');
+
+  document.getElementById('log-modal').classList.add('open');
+}
+
+function closeLogModal() {
+  document.getElementById('log-modal').classList.remove('open');
+  currentLogDay = null; sessionStartTime = null;
+}
+function closeLogModalOutside(e) {
+  if (e.target === document.getElementById('log-modal')) closeLogModal();
+}
+
+async function submitLog() {
+  if (!sb || !currentLogDay) return;
+  const statusEl = document.getElementById('log-modal-status');
+  statusEl.style.color = 'var(--stone)'; statusEl.textContent = 'Saving…';
+
+  const notes    = document.getElementById('log-modal-notes').value.trim() || null;
+  const today    = new Date().toISOString().split('T')[0];
+  const endTime  = new Date().toISOString();
+
+  const { data: session, error: e1 } = await sb
+    .from('workout_sessions')
+    .insert({ workout_date: today, day_label: currentLogDay, notes,
+              started_at: sessionStartTime, ended_at: endTime })
+    .select('id').single();
+
+  if (e1) { statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ ' + e1.message; return; }
+
+  const setRows = [];
+  document.querySelectorAll('#log-modal-body [data-field="weight"]').forEach(wEl => {
+    const exId  = wEl.dataset.ex;
+    const setN  = parseInt(wEl.dataset.set);
+    const rEl   = document.querySelector(`#log-modal-body [data-ex="${exId}"][data-set="${setN}"][data-field="reps"]`);
+    const rpeEl = document.querySelector(`#log-modal-body [data-ex="${exId}"][data-set="${setN}"][data-field="rpe"]`);
+    const ex    = ALL_EXERCISES.find(e => e.id === exId);
+    const w     = wEl.value   !== '' ? parseFloat(wEl.value)   : null;
+    const r     = rEl?.value  !== '' ? parseInt(rEl.value)     : null;
+    const rpe   = rpeEl?.value !== '' ? parseInt(rpeEl.value)  : null;
+    if (w === null && r === null) return;
+    setRows.push({ session_id: session.id, exercise_name: ex.name, set_number: setN, weight_lbs: w, reps: r, rpe });
+  });
+
+  if (!setRows.length) {
+    statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ No set data entered';
+    await sb.from('workout_sessions').delete().eq('id', session.id);
+    return;
+  }
+
+  const { error: e2 } = await sb.from('workout_sets').insert(setRows);
+  if (e2) { statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ ' + e2.message; return; }
+
+  closeLogModal();
+  showToast('Day ' + currentLogDay + ' saved ✓');
+  renderLog(); renderTrendSelect();
+}
+
+// ─── Session history (Supabase) ────────────────────────────────────────────────
+async function renderLog() {
+  const el = document.getElementById('log-list');
+  if (!sb) {
+    el.innerHTML = '<div class="empty-state">Connect Supabase above to see history.</div>';
+    return;
+  }
+  el.innerHTML = '<div class="empty-state">Loading…</div>';
+
+  const { data: sessions, error } = await sb
+    .from('workout_sessions')
+    .select('id, workout_date, day_label, notes, started_at, ended_at')
+    .order('workout_date', { ascending: false })
+    .order('created_at', { ascending: false })
+    .limit(50);
+
+  if (error) { el.innerHTML = `<div class="empty-state">Error: ${error.message}</div>`; return; }
+  if (!sessions?.length) {
+    el.innerHTML = '<div class="empty-state">No sessions logged yet.<br>Hit "Log Day A/B Workout" after you finish.</div>';
+    return;
+  }
+
+  const { data: sets } = await sb
+    .from('workout_sets')
+    .select('session_id, exercise_name, set_number, weight_lbs, reps, rpe')
+    .in('session_id', sessions.map(s => s.id))
+    .order('set_number');
+
+  const bySession = {};
+  (sets || []).forEach(s => {
+    if (!bySession[s.session_id]) bySession[s.session_id] = {};
+    if (!bySession[s.session_id][s.exercise_name]) bySession[s.session_id][s.exercise_name] = [];
+    bySession[s.session_id][s.exercise_name].push(s);
+  });
+
+  el.innerHTML = sessions.map(session => {
+    const d = new Date(session.workout_date + 'T12:00:00');
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+
+    let durationStr = '';
+    if (session.started_at && session.ended_at) {
+      const mins = Math.round((new Date(session.ended_at) - new Date(session.started_at)) / 60000);
+      if (mins > 0) durationStr = ` · ${mins} min`;
+    }
+
+    const exHtml = Object.entries(bySession[session.id] || {}).map(([name, exSets]) => {
+      const parts = exSets.map(s => {
+        let t = `Set ${s.set_number}:`;
+        if (s.weight_lbs != null) t += ` ${s.weight_lbs} lbs`;
+        if (s.reps != null) t += ` × ${s.reps}`;
+        if (s.rpe != null) t += ` @ RPE ${s.rpe}`;
+        return t;
+      }).join(' · ');
+      return `<div style="margin-bottom:4px;"><span style="color:var(--ice);font-weight:500;">${name}</span><br>
+        <span style="opacity:.55;font-size:11px;font-family:'DM Mono',monospace;">${parts}</span></div>`;
+    }).join('');
+
+    return `<div class="log-entry">
+      <div style="flex:1;min-width:0;">
+        <div class="log-entry-day">Day ${session.day_label}</div>
+        <div class="log-entry-meta">${dateStr}${durationStr}</div>
+        ${session.notes ? `<div style="font-size:12px;color:var(--stone);font-style:italic;margin-top:3px;">${session.notes}</div>` : ''}
+        <div class="log-entry-weights" style="margin-top:8px;">${exHtml || '<em style="opacity:.4">No sets recorded</em>'}</div>
+      </div>
+      <button class="log-delete" onclick="deleteSession('${session.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+async function deleteSession(id) {
+  if (!confirm('Delete this workout session?')) return;
+  const { error } = await sb.from('workout_sessions').delete().eq('id', id);
+  if (error) { showToast('Error deleting'); return; }
+  showToast('Session deleted');
+  renderLog(); renderTrendSelect();
+}
+
+// ─── Tabs ──────────────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.htab').forEach((t, i) => {
+    t.classList.toggle('active', (i === 0 && name === 'log') || (i === 1 && name === 'trend'));
+  });
+  document.getElementById('tab-log').classList.toggle('active', name === 'log');
+  document.getElementById('tab-trend').classList.toggle('active', name === 'trend');
+  if (name === 'trend') { renderTrendSelect(); }
+}
+
+// ─── Trend chart ───────────────────────────────────────────────────────────────
+async function renderTrendSelect() {
+  if (!sb) return;
+  const { data } = await sb.from('workout_sets').select('exercise_name').not('weight_lbs', 'is', null);
+  const names = [...new Set((data || []).map(r => r.exercise_name))].sort();
+  const sel = document.getElementById('trend-ex-select');
+  const prev = sel.value;
+  sel.innerHTML = names.map(n => `<option value="${n}">${n}</option>`).join('');
+  if (prev && names.includes(prev)) sel.value = prev;
+  renderChart();
+}
+
+async function renderChart() {
+  const sel    = document.getElementById('trend-ex-select');
+  const exName = sel?.value;
+  const canvas = document.getElementById('trendChart');
+  const emptyEl = document.getElementById('chart-empty');
+  if (!document.getElementById('tab-trend').classList.contains('active')) return;
+  if (!sb || !exName) { emptyEl.style.display = 'block'; canvas.style.display = 'none'; return; }
+
+  const { data: sets, error } = await sb
+    .from('workout_sets').select('session_id, weight_lbs')
+    .eq('exercise_name', exName).not('weight_lbs', 'is', null);
+  if (error || !sets?.length) { emptyEl.style.display = 'block'; canvas.style.display = 'none'; return; }
+
+  const { data: sessions } = await sb
+    .from('workout_sessions').select('id, workout_date')
+    .in('id', sets.map(s => s.session_id));
+
+  const dateMap = {};
+  (sessions || []).forEach(s => { dateMap[s.id] = s.workout_date; });
+
+  const byDate = {};
+  sets.forEach(s => {
+    const d = dateMap[s.session_id]; if (!d) return;
+    if (!byDate[d] || s.weight_lbs > byDate[d]) byDate[d] = s.weight_lbs;
+  });
+
+  const pts = Object.entries(byDate)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([date, val]) => ({ val, ts: new Date(date + 'T12:00:00') }));
+
+  if (pts.length < 2) { emptyEl.style.display = 'block'; canvas.style.display = 'none'; return; }
+  emptyEl.style.display = 'none'; canvas.style.display = 'block';
+
+  const ctx = canvas.getContext('2d');
+  const W   = canvas.parentElement.clientWidth - 32;
+  const H   = 220;
+  canvas.width  = W * devicePixelRatio; canvas.height = H * devicePixelRatio;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  ctx.clearRect(0, 0, W, H);
+
+  const vals  = pts.map(p => p.val);
+  const minV  = Math.min(...vals), maxV = Math.max(...vals);
+  const pad   = { top: 24, right: 20, bottom: 36, left: 48 };
+  const cW    = W - pad.left - pad.right;
+  const cH    = H - pad.top  - pad.bottom;
+  const range = maxV - minV || 1;
+  const xOf   = i => pad.left + (i / (pts.length - 1)) * cW;
+  const yOf   = v => pad.top  + cH - ((v - minV) / range) * cH;
+
+  ctx.strokeStyle = 'rgba(200,191,176,0.08)'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (i / 4) * cH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cW, y); ctx.stroke();
+    ctx.fillStyle = 'rgba(200,191,176,0.45)';
+    ctx.font = `10px 'DM Mono',monospace`; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxV - (i / 4) * range), pad.left - 6, y + 3.5);
+  }
+
+  ctx.save(); ctx.translate(12, pad.top + cH / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = 'rgba(168,196,204,0.4)'; ctx.font = `9px 'DM Mono',monospace`;
+  ctx.textAlign = 'center'; ctx.fillText('LBS', 0, 0); ctx.restore();
+
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + cH);
+  grad.addColorStop(0, 'rgba(168,196,204,0.18)'); grad.addColorStop(1, 'rgba(168,196,204,0.0)');
+  ctx.beginPath();
+  pts.forEach((p, i) => i === 0 ? ctx.moveTo(xOf(0), yOf(p.val)) : ctx.lineTo(xOf(i), yOf(p.val)));
+  ctx.lineTo(xOf(pts.length - 1), pad.top + cH); ctx.lineTo(xOf(0), pad.top + cH);
+  ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgba(168,196,204,0.85)'; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+  pts.forEach((p, i) => i === 0 ? ctx.moveTo(xOf(i), yOf(p.val)) : ctx.lineTo(xOf(i), yOf(p.val)));
+  ctx.stroke();
+
+  pts.forEach((p, i) => {
+    ctx.beginPath(); ctx.arc(xOf(i), yOf(p.val), 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(168,196,204,1)'; ctx.fill();
+    ctx.fillStyle = 'rgba(200,191,176,0.45)';
+    ctx.font = `9px 'DM Mono',monospace`; ctx.textAlign = 'center';
+    ctx.fillText(p.ts.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), xOf(i), H - 8);
+  });
+}
+
+// ─── CSV Export ────────────────────────────────────────────────────────────────
+async function exportCSV() {
+  if (!sb) { showToast('Connect Supabase first'); return; }
+  const { data: sessions } = await sb
+    .from('workout_sessions').select('id, workout_date, day_label, notes, started_at, ended_at')
+    .order('workout_date', { ascending: false });
+  if (!sessions?.length) { showToast('No sessions to export'); return; }
+
+  const { data: sets } = await sb
+    .from('workout_sets').select('session_id, exercise_name, set_number, weight_lbs, reps, rpe, notes')
+    .in('session_id', sessions.map(s => s.id)).order('set_number');
+
+  const header = ['Date','Day','Started','Ended','Session Notes','Exercise','Set','Weight (lbs)','Reps','RPE','Set Notes'];
+  const sessMap = {};
+  sessions.forEach(s => { sessMap[s.id] = s; });
+
+  const rows = (sets || []).map(s => {
+    const sess = sessMap[s.session_id];
+    return [sess.workout_date, sess.day_label, sess.started_at || '', sess.ended_at || '',
+            sess.notes || '', s.exercise_name, s.set_number,
+            s.weight_lbs ?? '', s.reps ?? '', s.rpe ?? '', s.notes || '']
+      .map(v => `"${String(v).replace(/"/g, '""')}"`).join(',');
+  });
+
+  const csv = [header.map(h => `"${h}"`).join(','), ...rows].join('\n');
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([csv], { type: 'text/csv' })),
+    download: 'mountain-athlete-log.csv',
+  });
+  a.click(); URL.revokeObjectURL(a.href);
+  showToast('CSV downloaded ✓');
+}
+
+// ─── Supabase setup modal ──────────────────────────────────────────────────────
+function openSbSetup() {
+  document.getElementById('sb-modal').classList.add('open');
+  document.getElementById('sb-url-input').value = localStorage.getItem(KEY_SB_URL) || '';
+  document.getElementById('sb-key-input').value = localStorage.getItem(KEY_SB_KEY) || '';
+  const el = document.getElementById('sb-conn-status');
+  if (sb) { el.className = 'sync-status sync-ok'; el.textContent = '✓ Currently connected'; }
+  else    { el.className = 'sync-status'; el.style.color = 'var(--stone)'; el.textContent = 'Not configured'; }
+}
+function closeSbSetup() { document.getElementById('sb-modal').classList.remove('open'); }
+function closeSbModalOutside(e) { if (e.target === document.getElementById('sb-modal')) closeSbSetup(); }
+
+async function saveSbConfig() {
+  const url = document.getElementById('sb-url-input').value.trim();
+  const key = document.getElementById('sb-key-input').value.trim();
+  if (!url || !key) { alert('Both URL and anon key are required.'); return; }
+  localStorage.setItem(KEY_SB_URL, url); localStorage.setItem(KEY_SB_KEY, key);
+  initSupabase();
+
+  const el = document.getElementById('sb-conn-status');
+  el.className = 'sync-status'; el.style.color = 'var(--stone)'; el.textContent = 'Testing connection…';
+
+  const { error } = await sb.from('workout_sessions').select('id').limit(1);
+  if (error) {
+    el.className = 'sync-status sync-err'; el.textContent = '✗ ' + error.message;
+  } else {
+    el.className = 'sync-status sync-ok'; el.textContent = '✓ Connected';
+    updateStatusBadge();
+    setTimeout(() => { closeSbSetup(); renderLog(); renderTrendSelect(); }, 900);
+  }
+}
+
+function updateStatusBadge() {
+  const b = document.getElementById('sb-status');
+  if (!b) return;
+  b.innerHTML = sb
+    ? '<span class="sb-badge connected">● Supabase</span>'
+    : '<span class="sb-badge">○ Not connected</span>';
+}
+
+// ─── Init ──────────────────────────────────────────────────────────────────────
+loadWeights();
+initInputListeners();
+initSupabase();
+updateStatusBadge();
+renderLog();
+renderTrendSelect();
+</script>
+</body>
+</html>
