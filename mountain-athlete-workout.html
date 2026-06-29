@@ -150,6 +150,20 @@
     .notes-grid{grid-template-columns:1fr;}
     .form-cues{grid-template-columns:1fr;}
   }
+  /* Inline set logging */
+  .has-inline-sets .ex-main{grid-template-columns:1fr 100px 1fr;}
+  .has-inline-sets .ex-weight{display:none;}
+  .inline-set-log{padding:8px 14px 10px;border-top:1px solid rgba(200,191,176,.06);}
+  /* Log bar at bottom of each day */
+  .log-bar-inline{margin-top:20px;padding-top:16px;border-top:1px solid rgba(200,191,176,.07);}
+  .session-notes-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(200,191,176,.15);border-radius:3px;color:var(--snow);font-family:'DM Sans',sans-serif;font-size:12px;padding:7px 10px;outline:none;resize:none;height:38px;margin-bottom:10px;transition:border-color .15s;}
+  .session-notes-input:focus{border-color:rgba(168,196,204,.4);}
+  .session-notes-input::placeholder{color:rgba(200,191,176,.2);}
+  .log-save-row{display:flex;align-items:center;justify-content:flex-end;gap:12px;}
+  .log-status{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;}
+  @media(max-width:620px){
+    .has-inline-sets .ex-main{grid-template-columns:1fr 88px;}
+  }
   /* Supabase status badge */
   .sb-badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px;display:inline-block;}
   .sb-badge.connected{color:#7ab3f7;border:1px solid rgba(66,133,244,.35);background:rgba(66,133,244,.08);}
@@ -410,8 +424,12 @@
       <p><strong>Ski/Bike Intervals:</strong> 6 rounds — 30 sec bike erg or ski erg sprint at max effort / 30 sec rest. Or: 3 min step-ups on the stair machine at a challenging pace. Skip this in-season when you're getting plenty of sport-specific cardio.</p>
     </div>
 
-    <div style="margin-top:20px;text-align:right;">
-      <button class="log-btn-day" onclick="logDay('A')">Log Day A Workout →</button>
+    <div class="log-bar-inline">
+      <textarea class="session-notes-input" id="notes-a" placeholder="Session notes (optional) — how did it feel?"></textarea>
+      <div class="log-save-row">
+        <span class="log-status" id="log-status-a"></span>
+        <button class="log-btn-day" onclick="logDay('A')">Save Day A →</button>
+      </div>
     </div>
   </div>
 </div>
@@ -612,8 +630,12 @@
       <p><strong>Grip &amp; Carry Circuit:</strong> 2 rounds — Farmer's carry 40m + 10 pull-up hang switches + 60 sec rest. Or just add 5 minutes of Zone 2 rowing to build aerobic base for long ski days.</p>
     </div>
 
-    <div style="margin-top:20px;text-align:right;">
-      <button class="log-btn-day" onclick="logDay('B')">Log Day B Workout →</button>
+    <div class="log-bar-inline">
+      <textarea class="session-notes-input" id="notes-b" placeholder="Session notes (optional) — how did it feel?"></textarea>
+      <div class="log-save-row">
+        <span class="log-status" id="log-status-b"></span>
+        <button class="log-btn-day" onclick="logDay('B')">Save Day B →</button>
+      </div>
     </div>
   </div>
 </div>
@@ -686,25 +708,6 @@
 
 <footer>Mountain Athlete · 1–2× Weekly Gym Plan · Built for backcountry, trail, and alpine terrain</footer>
 </div><!-- /container -->
-
-<!-- ======== WORKOUT LOG MODAL ======== -->
-<div class="modal-overlay" id="log-modal" onclick="closeLogModalOutside(event)">
-  <div class="modal" style="max-width:520px;">
-    <button class="modal-close" onclick="closeLogModal()">×</button>
-    <h3 id="log-modal-title">Log Day A</h3>
-    <p class="modal-subtitle" id="log-modal-date"></p>
-    <div id="log-modal-body"></div>
-    <div style="margin-top:20px;">
-      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin-bottom:6px;">Session Notes (optional)</div>
-      <textarea id="log-modal-notes" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(200,191,176,.2);border-radius:3px;color:var(--snow);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;outline:none;resize:vertical;min-height:56px;" placeholder="How did it feel? Any notes on form or conditions…"></textarea>
-    </div>
-    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px;">
-      <button class="log-btn-day" onclick="closeLogModal()">Cancel</button>
-      <button class="log-btn" onclick="submitLog()">Save Workout →</button>
-    </div>
-    <div id="log-modal-status" style="margin-top:10px;font-family:'DM Mono',monospace;font-size:11px;min-height:16px;letter-spacing:.05em;"></div>
-  </div>
-</div>
 
 <!-- ======== SUPABASE SETUP MODAL ======== -->
 <div class="modal-overlay" id="sb-modal" onclick="closeSbModalOutside(event)">
@@ -798,24 +801,13 @@ function getWeights() {
 }
 function setWeights(d) { localStorage.setItem(KEY_WEIGHTS, JSON.stringify(d)); }
 
+// Pre-fill inline set weight inputs from localStorage after injection
 function loadWeights() {
   const saved = getWeights();
   ALL_EXERCISES.forEach(ex => {
-    const el = document.getElementById(ex.id);
-    if (el && saved[ex.id] !== undefined) el.value = saved[ex.id];
-  });
-}
-
-function initInputListeners() {
-  ALL_EXERCISES.forEach(ex => {
-    const el = document.getElementById(ex.id);
-    if (!el) return;
-    el.addEventListener('change', () => {
-      const d = getWeights();
-      if (el.value !== '') d[ex.id] = Number(el.value);
-      else delete d[ex.id];
-      setWeights(d);
-      showToast('Weight saved ✓');
+    if (saved[ex.id] === undefined) return;
+    document.querySelectorAll(`[data-ex="${ex.id}"][data-field="weight"]`).forEach(el => {
+      el.value = saved[ex.id];
     });
   });
 }
@@ -827,30 +819,23 @@ function toggleCue(btn) {
   btn.classList.toggle('open', open);
 }
 
-// ─── Workout log modal ─────────────────────────────────────────────────────────
-let currentLogDay = null;
-let sessionStartTime = null;
+// ─── Inject inline set rows into each weighted exercise ────────────────────────
+function injectSetLogs() {
+  ALL_EXERCISES.forEach(ex => {
+    const input = document.getElementById(ex.id);
+    if (!input) return;
+    const row = input.closest('.exercise-row');
+    if (!row) return;
 
-function logDay(day) {
-  if (!sb) { openSbSetup(); showToast('Connect Supabase first'); return; }
-  currentLogDay = day;
-  sessionStartTime = new Date().toISOString();
-  const weights = getWeights();
+    row.classList.add('has-inline-sets');
 
-  document.getElementById('log-modal-title').textContent = 'Log Day ' + day;
-  document.getElementById('log-modal-date').textContent = new Date().toLocaleDateString('en-US', {
-    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
-  });
-  document.getElementById('log-modal-notes').value = '';
-  document.getElementById('log-modal-status').textContent = '';
-
-  document.getElementById('log-modal-body').innerHTML = EXERCISES[day].map(ex => {
-    const defaultWeight = weights[ex.id] || '';
-    const rows = Array.from({ length: ex.sets }, (_, i) => `
+    const div = document.createElement('div');
+    div.className = 'inline-set-log';
+    div.innerHTML = Array.from({ length: ex.sets }, (_, i) => `
       <div class="set-row">
         <span class="set-num">Set ${i + 1}</span>
         <input class="weight-input set-w" type="number" min="0" step="5" placeholder="—"
-          data-ex="${ex.id}" data-set="${i + 1}" data-field="weight" value="${defaultWeight}">
+          data-ex="${ex.id}" data-set="${i + 1}" data-field="weight">
         <span class="weight-unit">lbs</span>
         <span class="set-sep">×</span>
         <input class="weight-input set-r" type="number" min="0" step="1"
@@ -862,49 +847,65 @@ function logDay(day) {
         <input class="weight-input set-rpe" type="number" min="1" max="10" step="1"
           placeholder="—" data-ex="${ex.id}" data-set="${i + 1}" data-field="rpe">
       </div>`).join('');
-    return `<div class="ex-log-block"><div class="ex-log-name">${ex.name}</div>${rows}</div>`;
-  }).join('');
 
-  document.getElementById('log-modal').classList.add('open');
+    // Save weight to localStorage on change; sync same value to other sets of this exercise
+    div.querySelectorAll('[data-field="weight"]').forEach(wEl => {
+      wEl.addEventListener('change', () => {
+        const d = getWeights();
+        if (wEl.value !== '') {
+          d[ex.id] = Number(wEl.value);
+          // Fill any blank set weights in this exercise with the same value
+          div.querySelectorAll('[data-field="weight"]').forEach(other => {
+            if (other !== wEl && other.value === '') other.value = wEl.value;
+          });
+        } else {
+          delete d[ex.id];
+        }
+        setWeights(d);
+      });
+    });
+
+    // Insert before the form cue toggle button
+    const cueToggle = row.querySelector('.form-cue-toggle');
+    row.insertBefore(div, cueToggle);
+  });
 }
 
-function closeLogModal() {
-  document.getElementById('log-modal').classList.remove('open');
-  currentLogDay = null; sessionStartTime = null;
-}
-function closeLogModalOutside(e) {
-  if (e.target === document.getElementById('log-modal')) closeLogModal();
-}
+// ─── Save workout directly from inline inputs ──────────────────────────────────
+async function logDay(day) {
+  const statusEl = document.getElementById('log-status-' + day.toLowerCase());
 
-async function submitLog() {
-  if (!sb || !currentLogDay) return;
-  const statusEl = document.getElementById('log-modal-status');
+  if (!sb) {
+    openSbSetup();
+    return;
+  }
+
   statusEl.style.color = 'var(--stone)'; statusEl.textContent = 'Saving…';
 
-  const notes    = document.getElementById('log-modal-notes').value.trim() || null;
-  const today    = new Date().toISOString().split('T')[0];
-  const endTime  = new Date().toISOString();
+  const notes   = (document.getElementById('notes-' + day.toLowerCase())?.value.trim()) || null;
+  const today   = new Date().toISOString().split('T')[0];
 
   const { data: session, error: e1 } = await sb
     .from('workout_sessions')
-    .insert({ workout_date: today, day_label: currentLogDay, notes,
-              started_at: sessionStartTime, ended_at: endTime })
+    .insert({ workout_date: today, day_label: day, notes })
     .select('id').single();
 
-  if (e1) { statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ ' + e1.message; return; }
+  if (e1) {
+    statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ ' + e1.message; return;
+  }
 
   const setRows = [];
-  document.querySelectorAll('#log-modal-body [data-field="weight"]').forEach(wEl => {
-    const exId  = wEl.dataset.ex;
-    const setN  = parseInt(wEl.dataset.set);
-    const rEl   = document.querySelector(`#log-modal-body [data-ex="${exId}"][data-set="${setN}"][data-field="reps"]`);
-    const rpeEl = document.querySelector(`#log-modal-body [data-ex="${exId}"][data-set="${setN}"][data-field="rpe"]`);
-    const ex    = ALL_EXERCISES.find(e => e.id === exId);
-    const w     = wEl.value   !== '' ? parseFloat(wEl.value)   : null;
-    const r     = rEl?.value  !== '' ? parseInt(rEl.value)     : null;
-    const rpe   = rpeEl?.value !== '' ? parseInt(rpeEl.value)  : null;
-    if (w === null && r === null) return;
-    setRows.push({ session_id: session.id, exercise_name: ex.name, set_number: setN, weight_lbs: w, reps: r, rpe });
+  EXERCISES[day].forEach(ex => {
+    document.querySelectorAll(`[data-ex="${ex.id}"][data-field="weight"]`).forEach(wEl => {
+      const setN  = parseInt(wEl.dataset.set);
+      const rEl   = document.querySelector(`[data-ex="${ex.id}"][data-set="${setN}"][data-field="reps"]`);
+      const rpeEl = document.querySelector(`[data-ex="${ex.id}"][data-set="${setN}"][data-field="rpe"]`);
+      const w     = wEl.value    !== '' ? parseFloat(wEl.value)   : null;
+      const r     = rEl?.value   !== '' ? parseInt(rEl.value)     : null;
+      const rpe   = rpeEl?.value !== '' ? parseInt(rpeEl.value)   : null;
+      if (w === null && r === null) return;
+      setRows.push({ session_id: session.id, exercise_name: ex.name, set_number: setN, weight_lbs: w, reps: r, rpe });
+    });
   });
 
   if (!setRows.length) {
@@ -914,10 +915,13 @@ async function submitLog() {
   }
 
   const { error: e2 } = await sb.from('workout_sets').insert(setRows);
-  if (e2) { statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ ' + e2.message; return; }
+  if (e2) {
+    statusEl.style.color = 'var(--rust)'; statusEl.textContent = '✗ ' + e2.message; return;
+  }
 
-  closeLogModal();
-  showToast('Day ' + currentLogDay + ' saved ✓');
+  statusEl.style.color = '#7ab3f7'; statusEl.textContent = '✓ Saved';
+  setTimeout(() => { statusEl.textContent = ''; }, 3000);
+  showToast('Day ' + day + ' saved ✓');
   renderLog(); renderTrendSelect();
 }
 
@@ -1150,18 +1154,39 @@ function closeSbSetup() { document.getElementById('sb-modal').classList.remove('
 function closeSbModalOutside(e) { if (e.target === document.getElementById('sb-modal')) closeSbSetup(); }
 
 async function saveSbConfig() {
-  const url = document.getElementById('sb-url-input').value.trim();
-  const key = document.getElementById('sb-key-input').value.trim();
-  if (!url || !key) { alert('Both URL and anon key are required.'); return; }
-  localStorage.setItem(KEY_SB_URL, url); localStorage.setItem(KEY_SB_KEY, key);
-  initSupabase();
+  const rawUrl = document.getElementById('sb-url-input').value.trim();
+  const key    = document.getElementById('sb-key-input').value.trim();
+  if (!rawUrl || !key) { alert('Both URL and anon key are required.'); return; }
+
+  // Normalise: strip trailing slash, ensure https
+  const url = rawUrl.replace(/\/+$/, '');
 
   const el = document.getElementById('sb-conn-status');
-  el.className = 'sync-status'; el.style.color = 'var(--stone)'; el.textContent = 'Testing connection…';
+
+  if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
+    el.className = 'sync-status sync-err';
+    el.textContent = '✗ URL should look like https://xxxx.supabase.co — check Settings → API in your Supabase project';
+    return;
+  }
+
+  localStorage.setItem(KEY_SB_URL, url); localStorage.setItem(KEY_SB_KEY, key);
+  // Sync cleaned URL back into the input
+  document.getElementById('sb-url-input').value = url;
+  initSupabase();
+
+  el.className = 'sync-status'; el.style.color = 'var(--stone)';
+  el.textContent = `Testing connection to ${url} …`;
 
   const { error } = await sb.from('workout_sessions').select('id').limit(1);
   if (error) {
-    el.className = 'sync-status sync-err'; el.textContent = '✗ ' + error.message;
+    let hint = '';
+    if (error.message.includes('relation') || error.code === '42P01') {
+      hint = ' — tables not found, run supabase_schema.sql in your SQL Editor first';
+    } else if (error.message.includes('Invalid API key') || error.code === 'PGRST301') {
+      hint = ' — check your anon key';
+    }
+    el.className = 'sync-status sync-err';
+    el.textContent = `✗ ${error.message}${hint}`;
   } else {
     el.className = 'sync-status sync-ok'; el.textContent = '✓ Connected';
     updateStatusBadge();
@@ -1178,8 +1203,8 @@ function updateStatusBadge() {
 }
 
 // ─── Init ──────────────────────────────────────────────────────────────────────
+injectSetLogs();  // must run before loadWeights so inline inputs exist
 loadWeights();
-initInputListeners();
 initSupabase();
 updateStatusBadge();
 renderLog();
